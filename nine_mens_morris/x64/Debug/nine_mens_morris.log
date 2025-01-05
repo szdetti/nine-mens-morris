@@ -1,0 +1,8 @@
+﻿  Game.cpp
+C:\Users\igbin\OneDrive\Cplusplus\nine_mens_morris\nine_mens_morris\Game.cpp(131,16): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\igbin\OneDrive\Cplusplus\nine_mens_morris\nine_mens_morris\Game.cpp(139,16): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\igbin\OneDrive\Cplusplus\nine_mens_morris\nine_mens_morris\Game.cpp(153,16): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\igbin\OneDrive\Cplusplus\nine_mens_morris\nine_mens_morris\Game.cpp(165,16): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\igbin\OneDrive\Cplusplus\nine_mens_morris\nine_mens_morris\Game.cpp(179,16): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\igbin\OneDrive\Cplusplus\nine_mens_morris\nine_mens_morris\Game.cpp(191,16): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  nine_mens_morris.vcxproj -> C:\Users\igbin\OneDrive\Cplusplus\nine_mens_morris\x64\Debug\nine_mens_morris.exe
