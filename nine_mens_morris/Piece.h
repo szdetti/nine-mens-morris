@@ -11,7 +11,7 @@ public:
     static const std::string symbol;
 
     Piece();
-    Piece(Colour colour);
+    Piece(Colour colourr);
     void setColour(Colour newColour);
     Colour getColour();
     void setInMill(bool isInMill);

@@ -131,6 +131,7 @@
     <ClInclude Include="Constants.h" />
     <ClInclude Include="Field.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameHelper.h" />
     <ClInclude Include="Piece.h" />
     <ClInclude Include="Player.h" />
   </ItemGroup>
@@ -139,6 +140,7 @@
     <ClCompile Include="Constants.cpp" />
     <ClCompile Include="Field.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameHelper.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Piece.cpp" />
     <ClCompile Include="Player.cpp" />

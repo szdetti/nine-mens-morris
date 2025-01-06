@@ -181,7 +181,12 @@ whether they are a default piece or belong to a player. The piece's display meth
 prints the "O" string with the appropriate colour to the console.
  */
 void Board::display(){
-/* 1st ROW */
+
+/* COLUMN IDENTIFIERS */
+    std::cout << "   A    B    C      D      E   F     G" << std::endl;
+
+/* 1st ROW (FIELD ROW 1) */
+    std::cout << "1  ";
     fields[0]->getPiece()->display(); // A1
     std::cout  << "----------------";
     fields[1]->getPiece()->display(); // D1
@@ -189,11 +194,11 @@ void Board::display(){
     fields[2]->getPiece()->display(); // G1
     std::cout << std::endl;
 
-/* 2nd ROW*/
-    std::cout << "|                |                |" << std::endl;
+/* 2nd ROW (FIELD ROW 2) */
+    std::cout << "   |                |                |" << std::endl;
 
 /* 3rd ROW*/
-    std::cout << "|    ";
+    std::cout << "2  |    ";
     fields[3]->getPiece()->display(); // B2
     std::cout <<"-----------";
     fields[4]->getPiece()->display(); // D2
@@ -202,10 +207,10 @@ void Board::display(){
     std::cout<<"    |" << std::endl;
 
 /* 4th ROW */
-    std::cout << "|    |           |           |    |" << std::endl;
+    std::cout << "   |    |           |           |    |" << std::endl;
 
-/* 5th ROW */
-    std::cout << "|    |    ";
+/* 5th ROW (FIELD ROW 3) */
+    std::cout << "3  |    |    ";
     fields[6]->getPiece()->display(); // C3
     std::cout<<"------";
     fields[7]->getPiece()->display(); // D3
@@ -214,16 +219,14 @@ void Board::display(){
     std::cout<<"    |    |" << std::endl;
 
 /* 6th ROW */
-    std::cout << "|    |    |             |    |    |" << std::endl;
+    std::cout << "   |    |    |             |    |    |" << std::endl;
 
 /* 7th ROW */
-    std::cout << "|    |    |             |    |    |" << std::endl;
-
-/* 8th ROW */
-    std::cout << "|    |    |             |    |    |" << std::endl;
+    std::cout << "   |    |    |             |    |    |" << std::endl;
 
 
-/* 9th ROW */
+/* 8th ROW (FIELD ROW 4) */
+    std::cout << "4  ";
     fields[9]->getPiece()->display(); // A4
     std::cout << "----";
     fields[10]->getPiece()->display(); // B4
@@ -237,17 +240,14 @@ void Board::display(){
     fields[14]->getPiece()->display(); // G4
     std::cout << std::endl;
 
+/* 9th ROW */
+    std::cout << "   |    |    |             |    |    |" << std::endl;
+
 /* 10th ROW */
-    std::cout << "|    |    |             |    |    |" << std::endl;
+    std::cout << "   |    |    |             |    |    |" << std::endl;
 
-/* 11th ROW */
-    std::cout << "|    |    |             |    |    |" << std::endl;
-
-/* 12th ROW */
-    std::cout << "|    |    |             |    |    |" << std::endl;
-
-/* 13th ROW */
-    std::cout << "|    |    ";
+/* 11th ROW (FIELD ROW 5) */
+    std::cout << "5  |    |    ";
     fields[15]->getPiece()->display(); // C5
     std::cout<<"------";
     fields[16]->getPiece()->display(); // D5
@@ -255,11 +255,11 @@ void Board::display(){
     fields[17]->getPiece()->display(); // E5
     std::cout<<"    |    |" << std::endl;
 
-/* 14th ROW */
-    std::cout << "|    |           |           |    |" << std::endl;
+/* 12th ROW */
+    std::cout << "   |    |           |           |    |" << std::endl;
 
-/* 15th ROW */
-    std::cout << "|    ";
+/* 13th ROW (FIELD ROW 6) */
+    std::cout << "6  |    ";
     fields[18]->getPiece()->display(); // B6
     std::cout<<"-----------";
     fields[19]->getPiece()->display(); // D6
@@ -267,10 +267,11 @@ void Board::display(){
     fields[20]->getPiece()->display(); // F6
     std::cout<<"    |" << std::endl;
 
-/* 16th ROW */
-    std::cout << "|                |                |" << std::endl;
+/* 14th ROW */
+    std::cout << "   |                |                |" << std::endl;
 
-/* 17th (LAST) ROW */
+/* 15th (LAST) ROW (FIELD ROW 7) */
+    std::cout << "7  ";
     fields[21]->getPiece()->display(); // A7
     std::cout << "----------------";
     fields[22]->getPiece()->display(); // D7

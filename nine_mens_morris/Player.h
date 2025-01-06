@@ -11,18 +11,21 @@ class Player {
 private:
     std::string name;
     bool winner;
+    Colour colour;
     std::vector<std::shared_ptr<Piece>> initialPieces; 
     std::vector<std::shared_ptr<Piece>> piecesOnBoard;  
     std::vector<std::shared_ptr<Piece>> capturedPieces;  
 
 public:
-    Player();
+   // Player();
     Player(std::string name, Colour colour);
 
-    void setName(std::string newName);
-    std::string getName();
+    void setName(std::string& newName);
+    std::string& getName();
     void setWinner(bool win);
     bool isWinner();
+    void setColour(Colour newColour);
+    Colour getColour();
     void setInitialPieces(std::vector<std::shared_ptr<Piece>> newInitialPieces);
     std::vector<std::shared_ptr<Piece>>& getInitialPieces();
     void setPiecesOnBoard(std::vector<std::shared_ptr<Piece>> newPiecesOnBoard);

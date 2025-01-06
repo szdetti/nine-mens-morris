@@ -3,6 +3,7 @@
 #include <vector>
 #include "Constants.h"
 #include <stdexcept>
+#include <iostream>
 
 /************** COLOURS ***************/
 
@@ -69,7 +70,28 @@ FieldName findFieldNameByString(std::string fieldNameString) {
 /******************** OTHER **********************/
 
 const int piecesPerPlayer = 9;
+const std::string defaultName = "default";
 const std::string instructions = "Each player has 9 pieces to play with. In the first phase, players place their pieces on any empty field of the board, taking turns. In the second phase, players can move \
 their pieces on the board between connected fields.If in any phase a player has three pieces on three adjacent fields horizontally or vertically(called a mill), that player can take one piece of the other \
 player's off the board - but only of those that are not part of a mill, except when all the pieces are in a mill, in which case it is allowed to take off any one of them.The game ends when one player is \
 reduced to two pieces or cannot make any moves.";
+
+/* Used to print an example of the board when introducing the game to players */
+void printBasicBoard() {
+    std::cout << "   A    B    C      D      E   F     G" << std::endl;
+    std::cout << "1  O----------------O----------------O" << std::endl;
+    std::cout << "   |                |                |" << std::endl;
+    std::cout << "2  |    O-----------O----------O     |" << std::endl;
+    std::cout << "   |    |           |          |     |" << std::endl;
+    std::cout << "3  |    |    O------O------O   |     |" << std::endl;
+    std::cout << "   |    |    |             |   |     |" << std::endl;
+    std::cout << "   |    |    |             |   |     |" << std::endl;
+    std::cout << "4  O----O----O             O---O-----O" << std::endl;
+    std::cout << "   |    |    |             |   |     |" << std::endl;
+    std::cout << "   |    |    |             |   |     |" << std::endl;
+    std::cout << "5  |    |    O------O------O   |     |" << std::endl;
+    std::cout << "   |    |           |          |     |" << std::endl;
+    std::cout << "6  |    O-----------O----------O     |" << std::endl;
+    std::cout << "   |                |                |" << std::endl;
+    std::cout << "7  O----------------O----------------O" << std::endl;
+}

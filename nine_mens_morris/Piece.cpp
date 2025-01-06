@@ -4,8 +4,8 @@
 
 const std::string Piece::symbol = "O";
 
-Piece::Piece() : colour(Colour::reset) {}
-Piece::Piece(Colour colour) : colour(colour) {}
+Piece::Piece() : colour(Colour::reset), inMill(false) {}
+Piece::Piece(Colour colour) : colour(colour), inMill(false) {}
 
 void Piece::setColour(Colour newColour) {
     colour = newColour;

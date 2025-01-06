@@ -1,18 +1,18 @@
 #include "Player.h"
 
-Player::Player() : name("default"), winner(false), initialPieces(), piecesOnBoard(), capturedPieces() {
-    createInitialPieces(Colour::reset);
-}
+//Player::Player() : name(defaultName), winner(false), initialPieces(), piecesOnBoard(), capturedPieces() {
+//    createInitialPieces(Colour::reset);
+//}
 
-Player::Player(std::string name, Colour colour) : name(name), winner(false), initialPieces(), piecesOnBoard(), capturedPieces() {
+Player::Player(std::string name, Colour colour) : name(name), winner(false), colour(colour), initialPieces(), piecesOnBoard(), capturedPieces() {
     createInitialPieces(colour);
 }
 
-void Player::setName(std::string newName) {
+void Player::setName(std::string& newName) {
     name = newName;
 }
 
-std::string Player::getName() {
+std::string& Player::getName() {
     return name;
 }
 
@@ -22,6 +22,13 @@ void Player::setWinner(bool win) {
 
 bool Player::isWinner() {
     return winner;
+}
+void Player::setColour(Colour newColour) {
+    colour = newColour;
+}
+
+Colour Player::getColour() {
+    return colour;
 }
 
 void Player::setInitialPieces(std::vector<std::shared_ptr<Piece>> newInitialPieces) {

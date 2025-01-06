@@ -13,6 +13,9 @@ bool matchColour(std::string colourToMatch);
 
 
 /***************** FIELD NAMES ********************/
+
+/* Although enums are automatically assigned an int value, they were declared explicitly
+to enforce the order in which they need to be printed to the console */
 enum class FieldName {
     A1 = 1,
     D1 = 2,
@@ -48,8 +51,9 @@ FieldName findFieldNameByString(std::string fieldNameString);
 /******************** OTHER **********************/
 
 extern const int piecesPerPlayer;
+extern const std::string defaultName;
 extern const std::string instructions;
-
+void printBasicBoard();
 
 
 #endif
