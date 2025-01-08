@@ -82,34 +82,30 @@ void GameHelper::printPlayerTurnBanner(Game& game) {
 	}
 	std::cout << "*" << getCodeFromColour(Colour::reset) << std::endl;
 }
-void GameHelper::printInfoBeforePlayerMove_phase1(Game& game) {
+void GameHelper::printInfoBeforePlayerMove(Game& game, GamePhase phase) {
 	printPlayerTurnBanner(game);
 	std::cout << std::endl;
-	game.printPlayerInitialPieces();
-	std::cout << std::endl;
-	game.getBoard().display();
+	if (phase == GamePhase::phase1) {
+		game.printPlayerInitialPieces();
+	}
+	else if (phase == GamePhase::phase2) {
+		printPlayerTurnBanner(game);
+	}
 	std::cout << std::endl;
 }
 
-void GameHelper::printInfoBeforePlayerMove_phase2(Game& game) {
-	printPlayerTurnBanner(game);
-	std::cout << std::endl;
-	game.getBoard().display();
-	std::cout << std::endl;
-
-}
-
-
-FieldName GameHelper::validateAddPiece(Game& game) {
-	FieldName fn = getFieldInput();
-	if (fn == FieldName::None) {
+FieldName GameHelper::validateAddPiece(Game& game, FieldName fromFn) {
+	FieldName toFn = getFieldInput();
+	if (toFn == FieldName::None) {
 		std::cout << "Please enter a valid field name." << std::endl;
-	} else if (!game.checkFieldEmpty(fn)) {
+	} else if (!game.checkFieldEmpty(toFn)) {
 		std::cout << "The selected field already has a piece on it. Please select an empty field." << std::endl;
-		fn = FieldName::None;
+		toFn = FieldName::None;
+	} else if (fromFn != FieldName::None && !isMoveToNeighbour(fromFn, toFn)) {
+		std::cout << "You can only move to a neighbouring empty field. Jumping is not allowed. Please select a different field." << std::endl;
 	}
 	
-	return fn;
+	return toFn;
 } 
 
 void GameHelper::placePieceOnBoard(Game& game, FieldName fn) {
@@ -153,25 +149,24 @@ FieldName GameHelper::validateRemovePiece(Game& game, Player& player){
 	FieldName fn = GameHelper::getFieldInput();
 	if (fn == FieldName::None) {
 		std::cout << "Please select a valid field Name." << std::endl;
+	} else if (game.checkFieldEmpty(fn))  {
+		 
+		std::cout << "The selected field does not have a piece on it. Please select a field that contains "<< player.getName() <<"'s piece." << std::endl;
+		fn = FieldName::None;
 	} else {
-		if (game.checkFieldEmpty(fn)) {
-			std::cout << "The selected field does not have a piece on it. Please select a field that contains "<< player.getName() <<"'s piece." << std::endl;
+		std::shared_ptr<Piece> p = game.correctPlayerPiece(fn, player);
+		if (p == nullptr) {
+			std::cout << "Please select a field that contains " << player.getName() << "'s piece." << std::endl;
 			fn = FieldName::None;
 		}
-		else {
-			std::shared_ptr<Piece> p = game.correctPlayerPiece(fn, player);
-			if (p == nullptr) {
-				std::cout << "Please select a field that contains " << player.getName() << "'s piece." << std::endl;
-				fn = FieldName::None;
-			}
-			else {
-				if (!pieceRemovable(game, p)) {
-					std::cout << "Only pieces that are not in a mill can be removed, unless all pieces are in a mill. Please select a different field." << std::endl;
-					fn = FieldName::None;
-				}
-			}
+		else if (!pieceRemovable(game, p)) {
+				 
+			std::cout << "Only pieces that are not in a mill can be removed, unless all pieces are in a mill. Please select a different field." << std::endl;
+			fn = FieldName::None;
+				
 		}
 	}
+	
 	return fn;
 }
 
@@ -205,7 +200,7 @@ bool GameHelper::handleMovePiece(Game& game) {
 	while (toFn == FieldName::None) {
 		toFn = validateAddPiece(game);
 	}
-
+	
 	game.movePiece(fromFn, toFn);
 	game.getBoard().display();
 	std::cout << std::endl;
@@ -290,11 +285,36 @@ void GameHelper::printInfoTable(Game& game) {
 	std::cout << "+--------------------+--------------------+--------------------+" << std::endl;
 }
 
-bool GameHelper::canBothPlayersMove(Game& game) {
+std::vector<Player*> GameHelper::canBothPlayersMove(Game& game) {
+	std::vector<Player*> players = {};
 	std::vector<std::shared_ptr<Field>> emptyFields = game.getBoard().getEmptyFields();
 	for (auto f : emptyFields) {
-		f->getPiece()->getColour();
-	}
+		bool hasRedNeighbour = false;
+		bool hasBlueNeighbour = false;
+		std::vector<FieldName> neighbourFieldNames = neighboursMap.at(f->getName());
+		for (auto fn : neighbourFieldNames) {
+			if (hasRedNeighbour && hasBlueNeighbour) { break;} // exit the loop if it has both colours adjacent to it 
+			std::shared_ptr<Field> field = game.getBoard().getFieldsMap().at(fn);
+			if (!hasRedNeighbour && field->getPiece()->getColour() == Colour::red) {
+				hasRedNeighbour = true;
+				players.push_back(&game.getPlayerByColour(Colour::red));
+			}
+			else if (!hasBlueNeighbour && field->getPiece()->getColour() == Colour::blue) {
+				hasBlueNeighbour = true;
+				players.push_back(&game.getPlayerByColour(Colour::blue));
+			}
+			
+		}
+		if (hasRedNeighbour && hasBlueNeighbour) {
+			return players;
+		}
 
-	return false;
+	}
+	return players;
+}
+
+bool GameHelper::isMoveToNeighbour(FieldName fromFn, FieldName toFn) {
+	std::vector<FieldName> neighbourFieldNames = neighboursMap.at(fromFn);
+	auto it = std::find(neighbourFieldNames.begin(), neighbourFieldNames.end(), toFn);
+	return it != neighbourFieldNames.end();
 }

@@ -32,8 +32,8 @@ int main() {
 			piece of the opposite player, and that the piece is either not in a mill or all pieces are in a mill, therefore can be taken from the
 			board. If piece can be taken, remove piece from board and print board and player piece info. If not, ask player to choose different
 			field / piece. */
-			while (game.getPlayer1().getInitialPieces().size() > 0 && game.getPlayer2().getInitialPieces().size() > 0) {
-				GameHelper::printInfoBeforePlayerMove_phase1(game);	
+			while (game.getPlayer1().getInitialPieces().size() > 0 || game.getPlayer2().getInitialPieces().size() > 0) {
+				GameHelper::printInfoBeforePlayerMove(game, GamePhase::phase1);	
 				bool newMill = GameHelper::handleAddPiece(game);
 				if (newMill) { GameHelper::handleNewMill(game); }
 				game.setCurrentPlayer(*game.getOtherPlayer());
@@ -41,11 +41,10 @@ int main() {
 			 
 
 			/* PHASE 2 */
-
+			std::cout << "All pieces have been placed on the board. Now players can move their pieces between adjacent fields. Try to reduce the opponent's pieces to 2 to win by forming mills." << std::endl;
 			while (game.getPlayer1().getPiecesOnBoard().size() > 2 && game.getPlayer2().getPiecesOnBoard().size() > 2) {
-				std::cout << "All pieces have been placed on the board. Now players can move their pieces between adjacent fields. Try to reduce the opponent's pieces to 2 to win by forming mills." << std::endl;
 				std::cout << std::endl;
-				GameHelper::printInfoBeforePlayerMove_phase2(game);
+				GameHelper::printInfoBeforePlayerMove(game, GamePhase::phase2);
 				bool newMill = GameHelper::handleMovePiece(game);
 				if (newMill) { GameHelper::handleNewMill(game); }
 				game.setCurrentPlayer(*game.getOtherPlayer());

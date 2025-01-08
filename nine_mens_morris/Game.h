@@ -24,6 +24,7 @@ public:
     void setCurrentPlayer(Player& player);
     Player* getCurrentPlayer();
     Player* getOtherPlayer();
+    Player& getPlayerByColour(Colour colour);
     bool checkMillsByFieldName(FieldName fieldName);
     bool checkFieldsByVector(std::vector<std::vector<FieldName>>& fieldNames);
     bool checkMatchingFields(std::vector<FieldName>& fieldNames, int index);

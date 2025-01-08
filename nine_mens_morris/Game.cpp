@@ -38,6 +38,12 @@ Player* Game::getCurrentPlayer() {
 Player* Game::getOtherPlayer() {
     return (currentPlayer == &player1) ? &player2 : &player1;
 }
+
+Player& Game::getPlayerByColour(Colour colour) {
+    if (getPlayer1().getColour() == colour) return player1;
+    if (getPlayer2().getColour() == colour) return player2;
+}
+
 /* Check if a piece on the field associated with the fieldName in the argument is in a mill. Used to determine if a new move has resulted in a mill. */
 bool Game::checkMillsByFieldName(FieldName fieldName) {
     std::vector<std::vector<FieldName>> millsToCheck =

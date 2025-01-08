@@ -48,6 +48,7 @@ enum class FieldName {
 extern const std::map<std::string, FieldName> stringToFieldNameMap;
 extern const std::vector<FieldName> FieldNames;
 FieldName findFieldNameByString(std::string fieldNameString);
+extern const std::map<FieldName, std::vector<FieldName>> neighboursMap;
 
 
 /******************** OTHER **********************/
@@ -57,5 +58,9 @@ extern const std::string defaultName;
 extern const std::string instructions;
 void printBasicBoard();
 
+enum class GamePhase {
+    phase1,
+    phase2
+};
 
 #endif

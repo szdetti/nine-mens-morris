@@ -65,7 +65,7 @@ FieldName findFieldNameByString(std::string fieldNameString) {
     throw std::invalid_argument("Field name not found");
 }
 
-std::map<FieldName, std::vector<FieldName>> neigbourhsMap = {
+const std::map<FieldName, std::vector<FieldName>> neighboursMap = {
     {FieldName::A1, {FieldName::A4, FieldName::D1}},
     {FieldName::D1, {FieldName::A4, FieldName::D2, FieldName::G1}},
     {FieldName::G1, {FieldName::D1, FieldName::G4}},
@@ -98,7 +98,7 @@ std::map<FieldName, std::vector<FieldName>> neigbourhsMap = {
 
 /******************** OTHER **********************/
 
-const int piecesPerPlayer = 9;
+const int piecesPerPlayer = 3;
 const std::string defaultName = "default";
 const std::string instructions = "Each player has 9 pieces to play with. In the first phase, players place their pieces on any empty field of the board, taking turns. In the second phase, players can move \
 their pieces on the board between connected fields.If in any phase a player has three pieces on three adjacent fields horizontally or vertically(called a mill), that player can take one piece of the other \
