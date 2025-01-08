@@ -13,7 +13,8 @@ class Board {
 private:
     static Board* instance; // Singleton instance as a static reference
     static std::map<FieldName, std::vector<std::vector<FieldName>>> fieldNamesByMills;
-    static std::vector<std::shared_ptr<Field>> fields;
+    static std::vector<std::shared_ptr<Field>> fieldsToPrint;
+    static std::vector<std::shared_ptr<Field>> emptyFields;
     static std::map<FieldName, std::shared_ptr<Field>> fieldsMap;
 
     Board();
@@ -27,9 +28,10 @@ public:
 
     static void initFieldNamesByMills();
     static void initFields();
-    std::map<FieldName, std::vector<std::vector<FieldName>>> getFieldNamesByMills();
-    std::vector<std::shared_ptr<Field>> getFields();
-    std::map<FieldName, std::shared_ptr<Field>> getFieldsMap();
+    std::map<FieldName, std::vector<std::vector<FieldName>>>& getFieldNamesByMills();
+    std::vector<std::shared_ptr<Field>>& getFields();
+    std::vector<std::shared_ptr<Field>>& getEmptyFields();
+    std::map<FieldName, std::shared_ptr<Field>>& getFieldsMap();
     void display();
     ~Board();
 };

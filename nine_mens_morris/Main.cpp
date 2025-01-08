@@ -8,13 +8,8 @@
 #include "GameHelper.h"
 
 int main() {
-    /* INTRODUCTION TO GAME RULES */
-	std::cout << "***************************" << std::endl;
-	std::cout << "*     About The Game      *" << std::endl;
-	std::cout << "***************************" << std::endl;
-	std::cout << instructions << std::endl;
-	std::cout << std::endl;
-	printBasicBoard();
+	/* INTRODUCTION TO GAME RULES */
+	GameHelper::printGameRules();
 
 	/* Start or Exit */
 	std::string response;
@@ -26,72 +21,39 @@ int main() {
 		response[0] = std::tolower(static_cast<unsigned char>(response[0]));
 		/* Get names and create players */
 		if (response == "s") {
-			std::string name1, name2;
-			std::cin.ignore();
-			std::cout << "Type in a name for Player 1: ";
-			std::getline(std::cin, name1);
-			std::cout << "Type in a name for Player 2: ";
-			std::getline(std::cin, name2);
-			std::cout << std::endl;
-		
-			Game game = Game(name1, name2);
+			std::vector<std::string> names = GameHelper::getPlayerNames();
+			Game game = Game(names[0], names[1]);
 
 			/* PHASE 1 */
 
+			/* Print who's turn it is and display both players' pieces. Get a field name input, check name validity and field availability. If
+			field name is valid and field is empty, place piece on field and display new board status and players' pieces' status. Check if new
+			mill has been formed. If yes, print info to user and ask for field input. Validate input, check that filed is not empty and contains
+			piece of the opposite player, and that the piece is either not in a mill or all pieces are in a mill, therefore can be taken from the
+			board. If piece can be taken, remove piece from board and print board and player piece info. If not, ask player to choose different
+			field / piece. */
 			while (game.getPlayer1().getInitialPieces().size() > 0 && game.getPlayer2().getInitialPieces().size() > 0) {
-				GameHelper::printInfoBeforeUserMove(game);
-				FieldName fName;
-				bool fieldEmpty = false;
-				while (!fieldEmpty) {
-					fName = GameHelper::getFieldInput();
-					fieldEmpty = game.checkFieldEmpty(fName);
-					if (!fieldEmpty) {
-						std::cout << "The selected field already has a piece on it. Please select an empty field." << std::endl;
-					}
-				}
-				GameHelper::placePieceOnBoard(game, fName);
-
-				bool newMill = game.checkMillsByFieldName(fName);
-				if (newMill) {
-					std::string currentPlayerName = game.getCurrentPlayer()->getName();
-					std::string otherPlayerName = game.getOtherPlayer() -> getName();
-					std::cout << currentPlayerName << " created a mill. " << std::endl;
-					std::cout << currentPlayerName << " has to select a field to take  one of " << otherPlayerName << "'s pieces off the board." << std::endl;					
-					FieldName fn;
-					bool fieldEmpty1 = true;
-					std::shared_ptr<Piece> p = nullptr;
-					bool isRemovable = false;
-					while (fieldEmpty1 || p ==  nullptr || !isRemovable) {
-						fn = GameHelper::getFieldInput();	
-						fieldEmpty1 = game.checkFieldEmpty(fn);
-						if (fieldEmpty1) {
-							std::cout << "The selected field does not have a piece on it. Please select a field that contains a piece of the other player." << std::endl;
-						}
-						else {
-							p = game.correctPlayerPiece(fn);
-							if (p == nullptr) {
-								std::cout << "Please select a field that contains a piece of the other player to remove it." << std::endl;
-							}
-							else {
-								isRemovable = game.pieceRemovable(p);
-								if (!isRemovable) {
-									std::cout << "Only pieces that are not in a mill can be removed, unless all pieces are in a mill. Please select a different field." << std::endl;
-								}
-							}
-						}
-					}
-					game.removePiece(fn);
-				}
+				GameHelper::printInfoBeforePlayerMove_phase1(game);	
+				bool newMill = GameHelper::handleAddPiece(game);
+				if (newMill) { GameHelper::handleNewMill(game); }
 				game.setCurrentPlayer(*game.getOtherPlayer());
 			}
+			 
 
 			/* PHASE 2 */
 
-			/*while (game.getPlayer1().getPiecesOnBoard().size() > 2 && game.getPlayer2().getPiecesOnBoard().size() > 2) {
+			while (game.getPlayer1().getPiecesOnBoard().size() > 2 && game.getPlayer2().getPiecesOnBoard().size() > 2) {
+				std::cout << "All pieces have been placed on the board. Now players can move their pieces between adjacent fields. Try to reduce the opponent's pieces to 2 to win by forming mills." << std::endl;
+				std::cout << std::endl;
+				GameHelper::printInfoBeforePlayerMove_phase2(game);
+				bool newMill = GameHelper::handleMovePiece(game);
+				if (newMill) { GameHelper::handleNewMill(game); }
+				game.setCurrentPlayer(*game.getOtherPlayer());
+			}
 
-			}*/
 
-		} else if (response == "e") {
+		}
+		else if (response == "e") {
 			return 0;
 		}
 		else {
@@ -99,7 +61,6 @@ int main() {
 		}
 	}
 	return 0;
-
+}
 	
 
-}

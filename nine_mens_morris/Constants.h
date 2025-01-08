@@ -15,32 +15,34 @@ bool matchColour(std::string colourToMatch);
 /***************** FIELD NAMES ********************/
 
 /* Although enums are automatically assigned an int value, they were declared explicitly
-to enforce the order in which they need to be printed to the console */
+to enforce the order in which they need to be printed to the console. The None value is 
+used as a return value from functions that check for a valid FieldName */
 enum class FieldName {
-    A1 = 1,
-    D1 = 2,
-    G1 = 3,
-    B2 = 4,
-    D2 = 5,
-    F2 = 6,
-    C3 = 7,
-    D3 = 8,
-    E3 = 9,
-    A4 = 10,
-    B4 = 11,
-    C4 = 12,
-    E4 = 13,
-    F4 = 14,
-    G4 = 15,
-    C5 = 16,
-    D5 = 17,
-    E5 = 18,
-    B6 = 19,
-    D6 = 20,
-    F6 = 21,
-    A7 = 22,
-    D7 = 23,
-    G7 = 24
+    A1 = 0,
+    D1 = 1,
+    G1 = 2,
+    B2 = 3,
+    D2 = 4,
+    F2 = 5,
+    C3 = 6,
+    D3 = 7,
+    E3 = 8,
+    A4 = 9,
+    B4 = 10,
+    C4 = 11,
+    E4 = 12,
+    F4 = 13,
+    G4 = 14,
+    C5 = 15,
+    D5 = 16,
+    E5 = 17,
+    B6 = 18,
+    D6 = 19,
+    F6 = 20,
+    A7 = 21,
+    D7 = 22,
+    G7 = 23,
+    None = 24
 };
 
 extern const std::map<std::string, FieldName> stringToFieldNameMap;

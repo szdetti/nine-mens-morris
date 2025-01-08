@@ -65,6 +65,35 @@ FieldName findFieldNameByString(std::string fieldNameString) {
     throw std::invalid_argument("Field name not found");
 }
 
+std::map<FieldName, std::vector<FieldName>> neigbourhsMap = {
+    {FieldName::A1, {FieldName::A4, FieldName::D1}},
+    {FieldName::D1, {FieldName::A4, FieldName::D2, FieldName::G1}},
+    {FieldName::G1, {FieldName::D1, FieldName::G4}},
+    {FieldName::B2, {FieldName::D2, FieldName::B4}},
+    {FieldName::D2, {FieldName::B2, FieldName::F2, FieldName::D1, FieldName::D3}},
+    {FieldName::F2, {FieldName::D2, FieldName::F4}},
+    {FieldName::C3, {FieldName::C4, FieldName::D3}},
+    {FieldName::D3, {FieldName::C3, FieldName::D2, FieldName::E3}},
+    {FieldName::E3, {FieldName::D3, FieldName::E4}},
+    {FieldName::A4, {FieldName::A1, FieldName::A7, FieldName::B4}},
+    {FieldName::B4, {FieldName::A4, FieldName::C4, FieldName::B2, FieldName::B6}},
+    {FieldName::C4, {FieldName::B4, FieldName::C3, FieldName::C5}},
+    {FieldName::E4, {FieldName::E3, FieldName::E5, FieldName::F4}},
+    {FieldName::F4, {FieldName::E4, FieldName::G4, FieldName::F2, FieldName::F6}},
+    {FieldName::G4, {FieldName::G1, FieldName::G7, FieldName::F4}},
+    {FieldName::C5, {FieldName::C4, FieldName::D5}},
+    {FieldName::D5, {FieldName::C5, FieldName::E5, FieldName::D6}},
+    {FieldName::E5, {FieldName::D5, FieldName::E4}},
+    {FieldName::B6, {FieldName::B4, FieldName::D6}},
+    {FieldName::D6, {FieldName::B6, FieldName::D5, FieldName::D7, FieldName::F6}},
+    {FieldName::F6, {FieldName::D6, FieldName::F4}},
+    {FieldName::A7, {FieldName::A4, FieldName::D7}},
+    {FieldName::D7, {FieldName::A7, FieldName::G7}},
+    {FieldName::G7, {FieldName::D7, FieldName::G4}},   
+};
+
+
+
 
 
 /******************** OTHER **********************/

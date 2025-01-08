@@ -9,7 +9,8 @@
 Board* Board::instance = nullptr;
 
 std::map<FieldName, std::vector<std::vector<FieldName>>> Board::fieldNamesByMills;
-std::vector<std::shared_ptr<Field>> Board::fields;
+std::vector<std::shared_ptr<Field>> Board::fieldsToPrint;
+std::vector<std::shared_ptr<Field>> Board::emptyFields;
 std::map<FieldName, std::shared_ptr<Field>> Board::fieldsMap;
 
 Board& Board::getInstance() {
@@ -26,11 +27,14 @@ Board::Board() {
 }
 
 void Board::initFields() {
-    fields = {};
+    fieldsToPrint = {};
+    emptyFields = {};
     fieldsMap = {};
     for (const auto& fieldName : FieldNames) {
         std::shared_ptr<Field> fieldPtr = std::make_shared<Field>(fieldName);
-        fields.push_back(fieldPtr);
+        fieldsToPrint.push_back(fieldPtr);
+        int index = static_cast<int>(fieldPtr->getName());
+        emptyFields.insert(emptyFields.begin() + index,fieldPtr);
         fieldsMap[fieldName] = fieldPtr;
     }
 }
@@ -162,15 +166,19 @@ void Board::initFieldNamesByMills(){
 };
 }
 
-std::map<FieldName, std::vector<std::vector<FieldName>>> Board::getFieldNamesByMills(){
+std::map<FieldName, std::vector<std::vector<FieldName>>>& Board::getFieldNamesByMills(){
     return fieldNamesByMills;
 }
 
-std::vector<std::shared_ptr<Field>> Board::getFields(){
-    return fields;
+std::vector<std::shared_ptr<Field>>& Board::getFields(){
+    return fieldsToPrint;
 }
 
-std::map<FieldName, std::shared_ptr<Field>> Board::getFieldsMap(){
+std::vector<std::shared_ptr<Field>>& Board::getEmptyFields() {
+    return emptyFields;
+}
+
+std::map<FieldName, std::shared_ptr<Field>>& Board::getFieldsMap(){
     return fieldsMap;
 }
 
@@ -187,11 +195,11 @@ void Board::display(){
 
 /* 1st ROW (FIELD ROW 1) */
     std::cout << "1  ";
-    fields[0]->getPiece()->display(); // A1
+    fieldsToPrint[0]->getPiece()->display(); // A1
     std::cout  << "----------------";
-    fields[1]->getPiece()->display(); // D1
+    fieldsToPrint[1]->getPiece()->display(); // D1
     std::cout << "----------------";
-    fields[2]->getPiece()->display(); // G1
+    fieldsToPrint[2]->getPiece()->display(); // G1
     std::cout << std::endl;
 
 /* 2nd ROW (FIELD ROW 2) */
@@ -199,11 +207,11 @@ void Board::display(){
 
 /* 3rd ROW*/
     std::cout << "2  |    ";
-    fields[3]->getPiece()->display(); // B2
+    fieldsToPrint[3]->getPiece()->display(); // B2
     std::cout <<"-----------";
-    fields[4]->getPiece()->display(); // D2
+    fieldsToPrint[4]->getPiece()->display(); // D2
     std::cout<<"-----------";
-    fields[5]->getPiece()->display(); // F2
+    fieldsToPrint[5]->getPiece()->display(); // F2
     std::cout<<"    |" << std::endl;
 
 /* 4th ROW */
@@ -211,11 +219,11 @@ void Board::display(){
 
 /* 5th ROW (FIELD ROW 3) */
     std::cout << "3  |    |    ";
-    fields[6]->getPiece()->display(); // C3
+    fieldsToPrint[6]->getPiece()->display(); // C3
     std::cout<<"------";
-    fields[7]->getPiece()->display(); // D3
+    fieldsToPrint[7]->getPiece()->display(); // D3
     std::cout<<"------";
-    fields[8]->getPiece()->display(); // E3
+    fieldsToPrint[8]->getPiece()->display(); // E3
     std::cout<<"    |    |" << std::endl;
 
 /* 6th ROW */
@@ -227,17 +235,17 @@ void Board::display(){
 
 /* 8th ROW (FIELD ROW 4) */
     std::cout << "4  ";
-    fields[9]->getPiece()->display(); // A4
+    fieldsToPrint[9]->getPiece()->display(); // A4
     std::cout << "----";
-    fields[10]->getPiece()->display(); // B4
+    fieldsToPrint[10]->getPiece()->display(); // B4
     std::cout<<"----";
-    fields[11]->getPiece()->display(); // C4
+    fieldsToPrint[11]->getPiece()->display(); // C4
     std::cout<<"             "; // middle of the board
-    fields[12]->getPiece()->display(); // E4
+    fieldsToPrint[12]->getPiece()->display(); // E4
     std::cout<<"----";
-    fields[13]->getPiece()->display(); // F4
+    fieldsToPrint[13]->getPiece()->display(); // F4
     std::cout<<"----";
-    fields[14]->getPiece()->display(); // G4
+    fieldsToPrint[14]->getPiece()->display(); // G4
     std::cout << std::endl;
 
 /* 9th ROW */
@@ -248,11 +256,11 @@ void Board::display(){
 
 /* 11th ROW (FIELD ROW 5) */
     std::cout << "5  |    |    ";
-    fields[15]->getPiece()->display(); // C5
+    fieldsToPrint[15]->getPiece()->display(); // C5
     std::cout<<"------";
-    fields[16]->getPiece()->display(); // D5
+    fieldsToPrint[16]->getPiece()->display(); // D5
     std::cout<<"------";
-    fields[17]->getPiece()->display(); // E5
+    fieldsToPrint[17]->getPiece()->display(); // E5
     std::cout<<"    |    |" << std::endl;
 
 /* 12th ROW */
@@ -260,11 +268,11 @@ void Board::display(){
 
 /* 13th ROW (FIELD ROW 6) */
     std::cout << "6  |    ";
-    fields[18]->getPiece()->display(); // B6
+    fieldsToPrint[18]->getPiece()->display(); // B6
     std::cout<<"-----------";
-    fields[19]->getPiece()->display(); // D6
+    fieldsToPrint[19]->getPiece()->display(); // D6
     std::cout<<"-----------";
-    fields[20]->getPiece()->display(); // F6
+    fieldsToPrint[20]->getPiece()->display(); // F6
     std::cout<<"    |" << std::endl;
 
 /* 14th ROW */
@@ -272,11 +280,11 @@ void Board::display(){
 
 /* 15th (LAST) ROW (FIELD ROW 7) */
     std::cout << "7  ";
-    fields[21]->getPiece()->display(); // A7
+    fieldsToPrint[21]->getPiece()->display(); // A7
     std::cout << "----------------";
-    fields[22]->getPiece()->display(); // D7
+    fieldsToPrint[22]->getPiece()->display(); // D7
     std::cout<<"----------------";
-    fields[23]->getPiece()->display(); // F7
+    fieldsToPrint[23]->getPiece()->display(); // F7
     std::cout << std::endl;
 }
 

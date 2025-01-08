@@ -42,17 +42,29 @@ Player* Game::getOtherPlayer() {
 bool Game::checkMillsByFieldName(FieldName fieldName) {
     std::vector<std::vector<FieldName>> millsToCheck =
         board.getFieldNamesByMills().at(fieldName);
-    return checkFieldsByVector(millsToCheck, 0);
+    return checkFieldsByVector(millsToCheck);
 
 }
-/* Recursively check if all of the vectors in a nested vector contain pieces belonging to the same player (meaning they contain a mill)*/
-bool Game::checkFieldsByVector(std::vector<std::vector<FieldName>>& vec, int index) {
-    if (index >= 0 && index < vec.size() - 1) {
-        return checkMatchingFields(vec[index], 0) || checkMatchingFields(vec[index + 1], 0);
+/* Check if both of the vectors in a nested vector contain field names that hold pieces belonging to the same player 
+(meaning they have achieved a mill). If any of them contains field names that form a mill, set the corresponding
+pieces flag to indicate they are in a mill. */
+bool Game::checkFieldsByVector(std::vector<std::vector<FieldName>>& vec) {
+    bool firstMill = checkMatchingFields(vec[0], 0);
+    bool secondMill = checkMatchingFields(vec[1], 0);
+    if (firstMill) {
+        for (auto fieldName : vec[0]) {
+            board.getFieldsMap()[fieldName]->getPiece()->setInMill(true);
+      }
     }
-    else {
-        return true;
+
+    if (secondMill) {
+        for (auto fieldName : vec[0]) {
+            board.getFieldsMap()[fieldName]->getPiece()->setInMill(true);
+        }
     }
+
+    return firstMill || secondMill;
+   
 }
 /* Recursively check that fields in a vector contain pieces beloning to the same player by comparing the colour of the pieces. */
 bool Game::checkMatchingFields(std::vector<FieldName>& fieldNames, int index) {
@@ -73,45 +85,39 @@ bool Game::checkFieldEmpty(FieldName fieldName) {
     return fieldToCheckPtr->getPiece()->getColour() == Colour::reset;
 }
 
-/* Check if field associated with field name selected by player contains a piece that belongs to the other player. Return false if 
+/* Check if field associated with field name selected by player contains a piece that belongs to the appropriate player. Return false if 
 colour of piece on field mathes colour of current player (they chose their own piece to remove). */
-std::shared_ptr<Piece> Game::correctPlayerPiece(FieldName fn) {
+std::shared_ptr<Piece> Game::correctPlayerPiece(FieldName fn, Player& player) {
     std::shared_ptr<Field> f = board.getFieldsMap()[fn];
     std::shared_ptr<Piece> toRemove = f->getPiece();
-    if (ColourMap.at(toRemove->getColour()) == ColourMap.at(currentPlayer->getColour())) {
+    if (ColourMap.at(toRemove->getColour()) != ColourMap.at(player.getColour())) {
         return nullptr;
     } 
     return toRemove;
 }
 
-bool Game::pieceRemovable(std::shared_ptr<Piece> p) {
-    if (p == nullptr) {
-        return false;
-    }
-    else {
-        Player* other = getOtherPlayer();
-        if (!p->isInMill() || other->allPiecesInMill()) {
-            return true;
-        }
-    }
-    return false;
-}
+
 
 /* Called in phase 1 of the game, when players place their pieces on the board. Retrieve the field (pointer) associated with the fieldname provided by the player, 
 set the field's piece field to a pointer pointing to (the memory address of) a piece object associated with the current player making the move. Keep track of
-the current player's pieces by updating the vectors representing the status of the pieces (initial - yet to be placed on the board, on board - as named) */
+the current player's pieces by updating the vectors representing the status of the pieces (initial - yet to be placed on the board, on board - as named).
+Update the board's vector that keeps track of empty fields by removing the shared_ptr of the field holding the newly placed piece.*/
 void Game::addPiece(FieldName fn) {
         std::shared_ptr<Field> f = board.getFieldsMap()[fn];
         std::shared_ptr<Piece> p = currentPlayer->getInitialPieces().back();
         currentPlayer->getInitialPieces().pop_back();
         currentPlayer->getPiecesOnBoard().push_back(p);
         f->setPiece(p);
+        std::vector<std::shared_ptr<Field>> emptyFields = getBoard().getEmptyFields();
+        emptyFields.erase(emptyFields.begin() + static_cast<int>(fn));
 }
 
 /* When a player is allowed to remove one of the other player's pieces from the board, remove that
 piece from the field specified by the player collecting the piece. Replace the removed piece with an
 empty (default) one in the field of the board. Add the removed piece to the captured pieces vector
-of the collecting player. Remove the removed piece from the player losing the piece.  */
+of the collecting player. Remove the removed piece from the player losing the piece. Update the board's
+vector that keeps track of empty fields by removing the shared_ptr of the field that the piece was 
+removed from. */
 
 void Game::removePiece(FieldName fn) {
         std::shared_ptr<Field> f = board.getFieldsMap()[fn];
@@ -119,24 +125,25 @@ void Game::removePiece(FieldName fn) {
         f->setPiece(std::make_shared<Piece>());
         currentPlayer->getCapturedPieces().push_back(captured);
         Player* p = getOtherPlayer();
-        p->getPiecesOnBoard().pop_back();  
+        p->getPiecesOnBoard().pop_back(); 
+        std::vector<std::shared_ptr<Field>> emptyFields = getBoard().getEmptyFields();
+        emptyFields.insert(emptyFields.begin() + static_cast<int>(fn), f);
+
 }
 
 /* Called in phase 2 of the game when users have placed all their pieces on the board and can now move them between eligible fields. Similarly to the
 functions that add and remove a piece, retrieve the field pointers associated with the fieldnames provided by the user and set the piece fields of the field 
 objects to the appropriate piece pointer - a default piece for the field being moved from fields and the current player's piece for the field being moved to. */
-void Game::movePiece(std::string fromFieldNameString, std::string toFieldNameString) {
-    try{
-        FieldName fromFn = findFieldNameByString(fromFieldNameString);
-        FieldName toFn = findFieldNameByString(toFieldNameString);
+void Game::movePiece(FieldName fromFn, FieldName toFn) {
         std::shared_ptr<Field> fromField = board.getFieldsMap()[fromFn];
         std::shared_ptr<Field> toField = board.getFieldsMap()[toFn];
         std::shared_ptr<Piece> toMove = fromField->getPiece();
         toField->setPiece(toMove);
+        if (toMove->isInMill()) { toMove->setInMill(false); }
         fromField->setPiece(std::make_shared<Piece>());
-     } catch (std::invalid_argument e) {
-        std::cout << e.what() << std::endl;
-    }
+        std::vector<std::shared_ptr<Field>> emptyFields = getBoard().getEmptyFields();
+        emptyFields.erase(emptyFields.begin() + static_cast<int>(toFn));
+        emptyFields.insert(emptyFields.begin() + static_cast<int>(fromFn), fromField);
 }
 
 /* Print both player's pieces yet to be placed on the board.  */
@@ -159,80 +166,9 @@ void Game::printPlayerInitialPieces() {
     std::cout << std::endl;
 
 }
-/* Print the pieces of each player that are on the board and captured from the other player to visualise game status. */
-void Game::printInfoTable() {
- 
-    /************* player1 name ******************/
+
     
-    std::cout << "                     +--------------------+--------------------+" << std::endl;
-    std::cout << "                     + " << player1.getName();
-    int space1 = 19-player1.getName().length();
-    for (int i = 0; i < space1; i++) {
-        std::cout << " ";
-    }
-
-    /**************** player2 name ******************/
-
-    std::cout << "+ " << player2.getName();
-    int space2 = 19 - player2.getName().length();
-    for (int i = 0; i < space2; i++) {
-        std::cout << " ";
-    }
-    std::cout << "+" << std::endl;
-    std::cout << "+--------------------+--------------------+--------------------+" << std::endl;
-    std::cout << "+  pieces on board   + ";
-
-    /***************** player1 pieces on board ******************/
-
-    for (auto p : player1.getPiecesOnBoard()){
-        p->display();
-        std::cout << " ";
-    }
-    int space3 = 19-player1.getPiecesOnBoard().size() * 2;
-    for (int i = 0; i < space3; i++) {
-        std::cout << " ";
-    }
-
-    /**************** player2 pieces on board ******************/
-
-    std::cout << "+ ";
-    for (auto p : player2.getPiecesOnBoard()) {
-        p->display();
-        std::cout << " ";
-    }
-    int space4 = 19-player2.getPiecesOnBoard().size() * 2;
-    for (int i = 0; i < space4; i++) {
-        std::cout << " ";
-    }
-    std::cout << "+" << std::endl;
-    std::cout << "+--------------------+--------------------+--------------------+" << std::endl;
     
-    /**************** player1 captured pieces ******************/
-
-    std::cout << "+  captured pieces   + ";
-    for (auto p : player1.getCapturedPieces()) {
-        p->display();
-        std::cout << " ";
-    }
-    int space5 = 19-player1.getCapturedPieces().size() * 2;
-    for (int i = 0; i < space5; i++) {
-        std::cout << " ";
-    }
-
-    /***************** player2 captured pieces ******************/
-
-    std::cout << "+ ";
-    for (auto p : player2.getCapturedPieces()) {
-        p->display();
-        std::cout << " ";
-    }
-    int space6 = 19-player2.getCapturedPieces().size() * 2;
-    for (int i = 0; i < space6; i++) {
-        std::cout << " ";
-    }
-    std::cout << "+" << std::endl;
-    std::cout << "+--------------------+--------------------+--------------------+" << std::endl;
-}
 
 
 Game::~Game() {
