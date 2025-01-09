@@ -1,10 +1,10 @@
 #include "Player.h"
-
+#include <iostream>
 //Player::Player() : name(defaultName), winner(false), initialPieces(), piecesOnBoard(), capturedPieces() {
 //    createInitialPieces(Colour::reset);
 //}
 
-Player::Player(std::string name, Colour colour) : name(name), winner(false), colour(colour), initialPieces(), piecesOnBoard(), capturedPieces() {
+Player::Player(std::string name, Colour colour) : name(name), colour(colour), initialPieces(), piecesOnBoard(), capturedPieces() {
     createInitialPieces(colour);
 }
 
@@ -16,13 +16,6 @@ std::string& Player::getName() {
     return name;
 }
 
-void Player::setWinner(bool win) {
-    winner = win;
-}
-
-bool Player::isWinner() {
-    return winner;
-}
 void Player::setColour(Colour newColour) {
     colour = newColour;
 }
@@ -63,7 +56,7 @@ void Player::createInitialPieces(Colour colour) {
 }
 
 bool Player::allPiecesInMill() {
-    for (auto p : piecesOnBoard) {
+    for (auto& p : piecesOnBoard) {
         if (!p->isInMill()) {
             return false;
         }

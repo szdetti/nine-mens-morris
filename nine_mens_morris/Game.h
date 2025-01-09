@@ -12,6 +12,8 @@ private:
     Player player1;
     Player player2;
     Player* currentPlayer;
+    Player* winner;
+    bool ended;
     friend class GameHelper;
 
 public:
@@ -23,8 +25,13 @@ public:
     Player& getPlayer2();
     void setCurrentPlayer(Player& player);
     Player* getCurrentPlayer();
+    void setWinner(Player& winner);
+    Player* getWinner();
     Player* getOtherPlayer();
+    Player& getOtherPlayer(Player& player);
     Player& getPlayerByColour(Colour colour);
+    void setEnded(bool hasEnded);
+    bool hasEnded();
     bool checkMillsByFieldName(FieldName fieldName);
     bool checkFieldsByVector(std::vector<std::vector<FieldName>>& fieldNames);
     bool checkMatchingFields(std::vector<FieldName>& fieldNames, int index);
@@ -33,7 +40,6 @@ public:
     void addPiece(FieldName fn);
     void removePiece(FieldName fn);
     void movePiece(FieldName fromFn, FieldName toFn);
-    void printPlayerInitialPieces();
     ~Game();
 
 };

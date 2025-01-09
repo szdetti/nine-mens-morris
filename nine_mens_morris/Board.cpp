@@ -34,7 +34,7 @@ void Board::initFields() {
         std::shared_ptr<Field> fieldPtr = std::make_shared<Field>(fieldName);
         fieldsToPrint.push_back(fieldPtr);
         int index = static_cast<int>(fieldPtr->getName());
-        emptyFields.insert(emptyFields.begin() + index,fieldPtr);
+        emptyFields.insert(emptyFields.begin() + index, fieldPtr);
         fieldsMap[fieldName] = fieldPtr;
     }
 }
