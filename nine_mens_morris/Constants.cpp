@@ -98,7 +98,7 @@ const std::map<FieldName, std::vector<FieldName>> neighboursMap = {
 
 /******************** OTHER **********************/
 
-const int piecesPerPlayer = 4;
+const int piecesPerPlayer = 9;
 const std::string defaultName = "default";
 const std::string instructions = "Each player has 9 pieces to play with. In the first phase, players place their pieces on any empty field of the board, taking turns. In the second phase, players can move \
 their pieces on the board between connected fields.If in any phase a player has three pieces on three adjacent fields horizontally or vertically(called a mill), that player can take one piece of the other \

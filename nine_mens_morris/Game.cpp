@@ -6,8 +6,12 @@
 
 
 Game::Game(std::string playerName1, std::string playerName2)
-    : board(Board::getInstance()), player1(Player(playerName1, Colour::red)), 
+    : board(Board()), player1(Player(playerName1, Colour::red)), 
     player2(playerName2, Colour::blue), currentPlayer(&this->player1), winner(nullptr) {}
+
+void Game::setBoard(Board& newBoard) {
+    board = newBoard;
+}
 
 Board& Game::getBoard() {
     return board;
@@ -55,14 +59,6 @@ Player* Game::getOtherPlayer() {
 Player& Game::getPlayerByColour(Colour colour) {
     if (getPlayer1().getColour() == colour) return player1;
     if (getPlayer2().getColour() == colour) return player2;
-}
-
-void Game::setEnded(bool hasEnded) {
-    ended = hasEnded;
-}
-
-bool Game::hasEnded() {
-    return ended;
 }
 
 /* Check if a piece on the field associated with the fieldName in the argument is in a mill. 

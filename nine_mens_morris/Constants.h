@@ -14,8 +14,9 @@ bool matchColour(std::string colourToMatch);
 
 /***************** FIELD NAMES ********************/
 
-/* Although enums are automatically assigned an int value, they were declared explicitly
-to enforce the order in which they need to be printed to the console. The None value is 
+/* Although tradiditonal enums implicitly convert to integers, enum class members do not.
+In this case values were declared explicitly to enforce the order in fields assiociated 
+with the FieldNames need to be printed to the console. The None value is 
 used as a return value from functions that check for a valid FieldName */
 enum class FieldName {
     A1 = 0,

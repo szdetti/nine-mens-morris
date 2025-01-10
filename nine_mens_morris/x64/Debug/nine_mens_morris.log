@@ -1,14 +1,18 @@
-﻿  Game.cpp
+﻿  Board.cpp
+  Constants.cpp
+  Field.cpp
+  Game.cpp
   GameHelper.cpp
-C:\Users\igbin\OneDrive\Cplusplus\nine_mens_morris\nine_mens_morris\GameHelper.cpp(54,12): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\igbin\OneDrive\Cplusplus\nine_mens_morris\nine_mens_morris\GameHelper.cpp(252,13): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\igbin\OneDrive\Cplusplus\nine_mens_morris\nine_mens_morris\GameHelper.cpp(260,13): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\igbin\OneDrive\Cplusplus\nine_mens_morris\nine_mens_morris\GameHelper.cpp(274,13): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\igbin\OneDrive\Cplusplus\nine_mens_morris\nine_mens_morris\GameHelper.cpp(286,13): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\igbin\OneDrive\Cplusplus\nine_mens_morris\nine_mens_morris\GameHelper.cpp(299,13): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\igbin\OneDrive\Cplusplus\nine_mens_morris\nine_mens_morris\GameHelper.cpp(311,13): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\igbin\OneDrive\Cplusplus\nine_mens_morris\nine_mens_morris\GameHelper.cpp(55,12): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\igbin\OneDrive\Cplusplus\nine_mens_morris\nine_mens_morris\GameHelper.cpp(253,13): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\igbin\OneDrive\Cplusplus\nine_mens_morris\nine_mens_morris\GameHelper.cpp(261,13): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\igbin\OneDrive\Cplusplus\nine_mens_morris\nine_mens_morris\GameHelper.cpp(275,13): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\igbin\OneDrive\Cplusplus\nine_mens_morris\nine_mens_morris\GameHelper.cpp(287,13): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\igbin\OneDrive\Cplusplus\nine_mens_morris\nine_mens_morris\GameHelper.cpp(300,13): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\igbin\OneDrive\Cplusplus\nine_mens_morris\nine_mens_morris\GameHelper.cpp(312,13): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
   Main.cpp
+  Piece.cpp
   Player.cpp
   Generating Code...
-C:\Users\igbin\OneDrive\Cplusplus\nine_mens_morris\nine_mens_morris\Game.cpp(58): warning C4715: 'Game::getPlayerByColour': not all control paths return a value
+C:\Users\igbin\OneDrive\Cplusplus\nine_mens_morris\nine_mens_morris\Game.cpp(62): warning C4715: 'Game::getPlayerByColour': not all control paths return a value
   nine_mens_morris.vcxproj -> C:\Users\igbin\OneDrive\Cplusplus\nine_mens_morris\x64\Debug\nine_mens_morris.exe

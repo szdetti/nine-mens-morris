@@ -6,25 +6,11 @@
 #include <iostream>
 #include <memory>
 
-Board* Board::instance = nullptr;
-
-std::map<FieldName, std::vector<std::vector<FieldName>>> Board::fieldNamesByMills;
-std::vector<std::shared_ptr<Field>> Board::fieldsToPrint;
-std::vector<std::shared_ptr<Field>> Board::emptyFields;
-std::map<FieldName, std::shared_ptr<Field>> Board::fieldsMap;
-
-Board& Board::getInstance() {
-    if (!instance) {
-        instance = new Board();
-    }
-    return *instance;
+Board::Board() { 
+    initFields(); 
+    initFieldNamesByMills(); 
 }
 
-// Private constructor initializing the board state
-Board::Board() {
-    initFieldNamesByMills();
-    initFields();
-}
 
 void Board::initFields() {
     fieldsToPrint = {};
@@ -166,16 +152,31 @@ void Board::initFieldNamesByMills(){
 };
 }
 
+void Board::setFieldNamesByMills(std::map<FieldName, std::vector<std::vector<FieldName>>>& newFieldNamesByMills) {
+    fieldNamesByMills = newFieldNamesByMills;
+}
+
 std::map<FieldName, std::vector<std::vector<FieldName>>>& Board::getFieldNamesByMills(){
     return fieldNamesByMills;
 }
 
-std::vector<std::shared_ptr<Field>>& Board::getFields(){
+void Board::setFieldsToPrint(std::vector<std::shared_ptr<Field>>& newFieldsToPrint) {
+    fieldsToPrint = newFieldsToPrint;
+}
+std::vector<std::shared_ptr<Field>>& Board::getFieldsToPrint(){
     return fieldsToPrint;
+}
+
+void Board::setEmptyFields(std::vector<std::shared_ptr<Field>>& newEmptyFields) {
+    emptyFields = newEmptyFields;
 }
 
 std::vector<std::shared_ptr<Field>>& Board::getEmptyFields() {
     return emptyFields;
+}
+
+void Board::setFieldsMap(std::map<FieldName, std::shared_ptr<Field>>& newFieldsMap) {
+    fieldsMap = newFieldsMap;
 }
 
 std::map<FieldName, std::shared_ptr<Field>>& Board::getFieldsMap(){

@@ -8,16 +8,16 @@
 
 class Game {
 private:
-    Board& board;
+    Board board;
     Player player1;
     Player player2;
     Player* currentPlayer;
     Player* winner;
-    bool ended;
     friend class GameHelper;
 
 public:
     Game(std::string playerName1, std::string playerName2);
+    void setBoard(Board& newBoard);
     Board& getBoard();
     void setPlayer1(Player& newPlayer1);
     Player& getPlayer1();
@@ -30,8 +30,7 @@ public:
     Player* getOtherPlayer();
     Player& getOtherPlayer(Player& player);
     Player& getPlayerByColour(Colour colour);
-    void setEnded(bool hasEnded);
-    bool hasEnded();
+
     bool checkMillsByFieldName(FieldName fieldName);
     bool checkFieldsByVector(std::vector<std::vector<FieldName>>& fieldNames);
     bool checkMatchingFields(std::vector<FieldName>& fieldNames, int index);

@@ -55,7 +55,9 @@ int main() {
 			}
 			GameHelper::determineWinner(game, playersWhoCanMove);
 			Player* winner = game.getWinner();
+			Player& other = game.getOtherPlayer(*winner);
 			if (winner != nullptr) {
+				std::cout << other.getName() << " cannot make any more moves. " << std::endl;
 				std::cout << getCodeFromColour(winner->getColour()) << "The winner is: " << winner->getName() << getCodeFromColour(Colour::reset) << std::endl;
 			}
 		}

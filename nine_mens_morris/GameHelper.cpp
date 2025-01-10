@@ -369,6 +369,8 @@ bool GameHelper::checkPlayersHavePieces(Game & game) {
 		&& game.getPlayer2().getPiecesOnBoard().size() > 2;
 }
 
+
+
 /* Check which players can move: if both, examine the number of pieces on board. If one player has two
 pieces on the board, the other will be set as winner. If there is only one player who can move, that
 player will be set as winner. If no player is set, the default value (nullptr) */

@@ -11,26 +11,22 @@
 
 class Board {
 private:
-    static Board* instance; // Singleton instance as a static reference
-    static std::map<FieldName, std::vector<std::vector<FieldName>>> fieldNamesByMills;
-    static std::vector<std::shared_ptr<Field>> fieldsToPrint;
-    static std::vector<std::shared_ptr<Field>> emptyFields;
-    static std::map<FieldName, std::shared_ptr<Field>> fieldsMap;
-
-    Board();
+     std::map<FieldName, std::vector<std::vector<FieldName>>> fieldNamesByMills;
+     std::vector<std::shared_ptr<Field>> fieldsToPrint;
+     std::vector<std::shared_ptr<Field>> emptyFields;
+     std::map<FieldName, std::shared_ptr<Field>> fieldsMap;
+     void initFieldNamesByMills();
+     void initFields();
 
 public:
-    // Delete copy constructor and assignment to enforce singleton
-    Board(const Board&) = delete;
-    Board& operator=(const Board&) = delete;
-
-    static Board& getInstance();
-
-    static void initFieldNamesByMills();
-    static void initFields();
+    Board();
+    void setFieldNamesByMills(std::map<FieldName, std::vector<std::vector<FieldName>>>& newFieldNamesByMills);
     std::map<FieldName, std::vector<std::vector<FieldName>>>& getFieldNamesByMills();
-    std::vector<std::shared_ptr<Field>>& getFields();
+    void setFieldsToPrint(std::vector<std::shared_ptr<Field>>& newFieldsToPrint);
+    std::vector<std::shared_ptr<Field>>& getFieldsToPrint();
+    void setEmptyFields(std::vector<std::shared_ptr<Field>>& newEmptyFields);
     std::vector<std::shared_ptr<Field>>& getEmptyFields();
+    void setFieldsMap(std::map<FieldName, std::shared_ptr<Field>>& newFieldsMap);
     std::map<FieldName, std::shared_ptr<Field>>& getFieldsMap();
     void display();
     ~Board();
