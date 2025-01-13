@@ -1,5 +1,5 @@
 #include <string>
-#include <map>
+#include <unordered_map>
 #include <vector>
 #include "Constants.h"
 #include <stdexcept>
@@ -7,7 +7,7 @@
 
 /************** COLOURS ***************/
 
-const std::map<Colour, std::string> ColourMap =
+const std::unordered_map<Colour, std::string> ColourMap =
 {
     {Colour::red, "\033[31m"},
     {Colour::blue, "\033[34m"},
@@ -33,7 +33,7 @@ bool matchColour(std::string colourToMatch)
 
 /***************** FIELD NAMES ********************/
 
-const std::map<std::string, FieldName> stringToFieldNameMap =
+const std::unordered_map<std::string, FieldName> stringToFieldNameMap =
 {
 {"A1", FieldName::A1}, {"D1", FieldName::D1}, {"G1", FieldName::G1},
 {"B2", FieldName::B2}, {"D2", FieldName::D2}, {"F2", FieldName::F2},
@@ -65,7 +65,7 @@ FieldName findFieldNameByString(std::string fieldNameString) {
     throw std::invalid_argument("Field name not found");
 }
 
-const std::map<FieldName, std::vector<FieldName>> neighboursMap = {
+const std::unordered_map<FieldName, std::vector<FieldName>> neighboursMap = {
     {FieldName::A1, {FieldName::A4, FieldName::D1}},
     {FieldName::D1, {FieldName::A1, FieldName::D2, FieldName::G1}},
     {FieldName::G1, {FieldName::D1, FieldName::G4}},

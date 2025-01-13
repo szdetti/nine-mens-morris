@@ -136,22 +136,19 @@ FieldName GameHelper::validateAddPiece(Game& game, FieldName fromFn) {
 	
 	return toFn;
 } 
-/* Place piece onto Board and update game visuals. */
-void GameHelper::placePieceOnBoard(Game& game, FieldName fn) {
-	game.addPiece(fn);
-	game.getBoard().display();
-	std::cout << std::endl;
-	printInfoTable(game);
-	std::cout << std::endl;
-}
 
-/* Place piece on selected field of the Board after validating selected field. */
+/* Place piece on selected field of the Board after validating selected field.
+Update game visuals.*/
 bool GameHelper::handleAddPiece(Game& game){
 	FieldName fn = FieldName::None;
 	while (fn == FieldName::None) {
 		fn = validateAddPiece(game);
 	}
-	placePieceOnBoard(game, fn);
+	game.addPiece(fn);
+	game.getBoard().display();
+	std::cout << std::endl;			
+	printInfoTable(game);
+	std::cout << std::endl;
 
 	return game.checkMillsByFieldName(fn);
 }
@@ -218,8 +215,9 @@ void GameHelper::handleNewMill(Game& game) {
 	std::cout << std::endl;
 }
 
-/* Validate seleceted fields and once both are eligible, move the piece with the Game's movePiece function. Check if the new move results in a mill
- and return the bool value of this check. */
+/* Validate seleceted fields and once both are eligible, move the piece
+with the Game's movePiece function.Check if the new move results in a mill
+and return the bool value of this check. */
 bool GameHelper::handleMovePiece(Game& game) {
 	std::cout << "First, select the field to move from." << std::endl;
 	FieldName fromFn = FieldName::None;

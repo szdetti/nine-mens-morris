@@ -15,7 +15,6 @@ public:
 	static void printPlayerInitialPieces(Game& game);
 	static void printInfoBeforePlayerMove(Game& game, GamePhase phase);
 	static FieldName validateAddPiece(Game& game, FieldName fromFn = FieldName::None);
-	static void placePieceOnBoard(Game& game, FieldName fn);
 	static bool handleAddPiece(Game& game);
 	static void printMillPlayerInfo(Game& game);
 	static bool pieceRemovable(Game& game, std::shared_ptr<Piece> p);

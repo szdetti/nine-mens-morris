@@ -3,11 +3,11 @@
 #define CONSTANTS_H
 #include <vector> 
 #include <string>
-#include <map>
+#include <unordered_map>
 
 /************** COLOURS ***************/
 enum class Colour { red, blue, reset };
-extern const std::map<Colour, std::string> ColourMap;
+extern const std::unordered_map<Colour, std::string> ColourMap;
 std::string getCodeFromColour(Colour colour);
 bool matchColour(std::string colourToMatch);
 
@@ -46,10 +46,10 @@ enum class FieldName {
     None = 24
 };
 
-extern const std::map<std::string, FieldName> stringToFieldNameMap;
+extern const std::unordered_map<std::string, FieldName> stringToFieldNameMap;
 extern const std::vector<FieldName> FieldNames;
 FieldName findFieldNameByString(std::string fieldNameString);
-extern const std::map<FieldName, std::vector<FieldName>> neighboursMap;
+extern const std::unordered_map<FieldName, std::vector<FieldName>> neighboursMap;
 
 
 /******************** OTHER **********************/

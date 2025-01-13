@@ -1,6 +1,6 @@
 #include "board.h"
 #include "constants.h"
-#include <map>
+#include <unordered_map>
 #include <string>
 #include <vector>
 #include <iostream>
@@ -152,11 +152,11 @@ void Board::initFieldNamesByMills(){
 };
 }
 
-void Board::setFieldNamesByMills(std::map<FieldName, std::vector<std::vector<FieldName>>>& newFieldNamesByMills) {
+void Board::setFieldNamesByMills(std::unordered_map<FieldName, std::vector<std::vector<FieldName>>>& newFieldNamesByMills) {
     fieldNamesByMills = newFieldNamesByMills;
 }
 
-std::map<FieldName, std::vector<std::vector<FieldName>>>& Board::getFieldNamesByMills(){
+std::unordered_map<FieldName, std::vector<std::vector<FieldName>>>& Board::getFieldNamesByMills(){
     return fieldNamesByMills;
 }
 
@@ -175,11 +175,11 @@ std::vector<std::shared_ptr<Field>>& Board::getEmptyFields() {
     return emptyFields;
 }
 
-void Board::setFieldsMap(std::map<FieldName, std::shared_ptr<Field>>& newFieldsMap) {
+void Board::setFieldsMap(std::unordered_map<FieldName, std::shared_ptr<Field>>& newFieldsMap) {
     fieldsMap = newFieldsMap;
 }
 
-std::map<FieldName, std::shared_ptr<Field>>& Board::getFieldsMap(){
+std::unordered_map<FieldName, std::shared_ptr<Field>>& Board::getFieldsMap(){
     return fieldsMap;
 }
 
